@@ -1,0 +1,18 @@
+trigger:
+- main  # Trigger on changes to the main branch
+
+pool:
+  vmImage: 'ubuntu-latest'  # Use Ubuntu for building
+
+steps:
+- task: Maven@3
+  displayName: 'Build with Maven'
+  inputs:
+    mavenPomFile: 'pom.xml'
+    goals: 'package'
+    publishJUnitResults: true
+
+- script: |
+    java -version
+    java -jar target/*.jar
+  displayName: 'Run Java Application'
